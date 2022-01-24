@@ -1,8 +1,12 @@
+import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
 
+dotenv.config();
+
 const app = express();
-const PORT = 9000;
+// const PORT = 9000;
+const PORT = process.env.PORT;
 
 const equipments = [
   {
@@ -74,8 +78,8 @@ const equipments = [
   },
 ];
 
-const MONGO_URL = "mongodb://localhost";
-// const MONGO_URL = process.env;
+// const MONGO_URL = "mongodb://localhost";
+const MONGO_URL = process.env.MONGO_URL;
 
 async function createConnection() {
   const client = new MongoClient(MONGO_URL);
@@ -92,21 +96,18 @@ app.get("/", (request, response) => {
   response.send("Hello!");
 });
 
-// app.get("/equipments", (request, response) => {
-//   response.send(equipments);
-// });
-
 app.get("/equipments/:id", async (request, response) => {
   const { id } = request.params;
   console.log(id);
   const product = await client
     .db("equipments")
     .collection("equipments")
-    .find({ id: id });
-  //   response.send(product);
+    .findOne({ id: id });
+
   product
     ? response.send(product)
     : response.status(404).send({ message: "No products found" });
+  console.log(product);
 });
 
 app.delete("/equipments/:id", async (request, response) => {
@@ -120,7 +121,6 @@ app.delete("/equipments/:id", async (request, response) => {
 });
 
 app.get("/equipments", async (request, response) => {
-  //   const { id, duration, rate } = request.query;
   console.log(request.query);
   const product = await client
     .db("equipments")
@@ -131,7 +131,6 @@ app.get("/equipments", async (request, response) => {
 });
 
 app.post("/equipments", async (request, response) => {
-  //   const { id, duration, rate } = request.query;
   const newProducts = request.body;
   console.log(newProducts);
   const product = await client
@@ -141,17 +140,17 @@ app.post("/equipments", async (request, response) => {
   response.send(product);
 });
 
-app.put("/equipments/:id", async (request, response) => {
-  const { id } = request.params;
-  console.log(id);
-  // const product = await client
-  //   .db("equipments")
-  //   .collection("equipments")
-  //   .updateOne({ id: id });
-  // //   response.send(product);
-  // product
-  //   ? response.send(product)
-  //   : response.status(404).send({ message: "No products found" });
-});
+// app.put("/equipments/:id", async (request, response) => {
+//   const { id } = request.params;
+//   console.log(id);
+//   // const product = await client
+//   //   .db("equipments")
+//   //   .collection("equipments")
+//   //   .updateOne({ id: id });
+//   // //   response.send(product);
+//   // product
+//   //   ? response.send(product)
+//   //   : response.status(404).send({ message: "No products found" });
+// });
 
 app.listen(PORT, () => console.log("SERVER STARTED ON PORT", PORT));
