@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
+import { productsRouter } from "./routes/products.js";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ async function createConnection() {
   return client;
 }
 
-const client = await createConnection();
+export const client = await createConnection();
 
 app.use(express.json());
 
@@ -26,61 +27,6 @@ app.get("/", (request, response) => {
   response.send("Hello!");
 });
 
-app.get("/equipments/:id", async (request, response) => {
-  const { id } = request.params;
-  console.log(id);
-  const product = await client
-    .db("equipments")
-    .collection("equipments")
-    .findOne({ id: id });
-
-  product
-    ? response.send(product)
-    : response.status(404).send({ message: "No products found" });
-  console.log(product);
-});
-
-app.delete("/equipments/:id", async (request, response) => {
-  const { id } = request.params;
-  console.log(id);
-  const product = await client
-    .db("equipments")
-    .collection("equipments")
-    .deleteOne({ id: id });
-  response.send(product);
-});
-
-app.get("/equipments", async (request, response) => {
-  console.log(request.query);
-  const product = await client
-    .db("equipments")
-    .collection("equipments")
-    .find(request.query)
-    .toArray();
-  response.send(product);
-});
-
-app.post("/equipments", async (request, response) => {
-  const newProducts = request.body;
-  console.log(newProducts);
-  const product = await client
-    .db("equipments")
-    .collection("equipments")
-    .insertMany(newProducts);
-  response.send(product);
-});
-
-// app.put("/equipments/:id", async (request, response) => {
-//   const { id } = request.params;
-//   console.log(id);
-//   // const product = await client
-//   //   .db("equipments")
-//   //   .collection("equipments")
-//   //   .updateOne({ id: id });
-//   // //   response.send(product);
-//   // product
-//   //   ? response.send(product)
-//   //   : response.status(404).send({ message: "No products found" });
-// });
+app.use("/equipments", productsRouter);
 
 app.listen(PORT, () => console.log("SERVER STARTED ON PORT", PORT));
