@@ -6,6 +6,7 @@ import {
   addProducts,
   updateProductsById,
 } from "../helper.js";
+import { auth } from "../middleware/auth.js";
 // import {
 //   getProductsById,
 //   deleteProducts,
@@ -14,6 +15,12 @@ import {
 // } from "./helper.js";
 
 const router = express.Router();
+
+router.get("/", auth, async (request, response) => {
+  console.log(request.query);
+  const product = await getAllProducts(request);
+  response.send(product);
+});
 
 router.get("/:id", async (request, response) => {
   const { id } = request.params;
@@ -38,12 +45,6 @@ router.put("/:id", async (request, response) => {
   const updateProduct = request.body;
   console.log(updateProduct);
   const product = await updateProductsById(id, updateProduct);
-  response.send(product);
-});
-
-router.get("/", async (request, response) => {
-  console.log(request.query);
-  const product = await getAllProducts(request);
   response.send(product);
 });
 

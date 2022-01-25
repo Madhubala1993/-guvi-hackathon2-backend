@@ -1,4 +1,5 @@
 import { client } from "./server.js";
+import bcrypt from "bcrypt";
 
 export async function getProductsById(id) {
   return await client
@@ -31,4 +32,25 @@ export async function updateProductsById(id, updateProduct) {
     .db("equipments")
     .collection("equipments")
     .updateOne({ id: id }, { $set: updateProduct });
+}
+
+export async function genPassword(password) {
+  const salt = await bcrypt.genSalt(10);
+  console.log(salt);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  return hashedPassword;
+}
+
+export async function createUser(username, hashedPassword) {
+  return await client
+    .db("equipments")
+    .collection("users")
+    .insertOne({ username: username, password: hashedPassword });
+}
+
+export async function getUserByName(username) {
+  return await client
+    .db("equipments")
+    .collection("users")
+    .findOne({ username: username });
 }
