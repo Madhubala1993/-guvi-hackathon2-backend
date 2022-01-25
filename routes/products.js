@@ -16,7 +16,7 @@ import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/", auth, async (request, response) => {
+router.get("/", async (request, response) => {
   console.log(request.query);
   const product = await getAllProducts(request);
   response.send(product);
