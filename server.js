@@ -1,3 +1,4 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
@@ -23,6 +24,7 @@ async function createConnection() {
 export const client = await createConnection();
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (request, response) => {
   response.send("Hello!");
