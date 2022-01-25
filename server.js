@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { MongoClient } from "mongodb";
 import { productsRouter } from "./routes/products.js";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 
@@ -30,3 +31,12 @@ app.get("/", (request, response) => {
 app.use("/equipments", productsRouter);
 
 app.listen(PORT, () => console.log("SERVER STARTED ON PORT", PORT));
+
+async function genPassword(password) {
+  const salt = await bcrypt.genSalt(10);
+  console.log(salt);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  console.log(hashedPassword);
+}
+
+console.log(genPassword("Password@123"));
