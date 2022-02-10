@@ -48,7 +48,7 @@ router.put("/:id", async (request, response) => {
   response.send(product);
 });
 
-router.post("/add", async (request, response) => {
+router.post("/", async (request, response) => {
   const newProducts = request.body;
   console.log(newProducts);
   const product = await addProducts(newProducts);
