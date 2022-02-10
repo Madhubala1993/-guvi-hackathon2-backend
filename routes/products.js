@@ -34,9 +34,9 @@ router.get("/:id", async (request, response) => {
 });
 
 router.delete("/:id", async (request, response) => {
-  const { id } = request.params;
-  console.log(id);
-  const product = await deleteProducts(id);
+  const { _id } = request.params;
+  console.log(_id);
+  const product = await deleteProducts(_id);
   response.send(product);
 });
 
