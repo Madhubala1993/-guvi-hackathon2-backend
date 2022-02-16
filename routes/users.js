@@ -2,6 +2,8 @@ import express from "express";
 import { createUser, genPassword, getUserByName } from "../helper.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+// import crypto from "crypto";
+// import req from "express/lib/request";
 
 const router = express.Router();
 
@@ -48,4 +50,17 @@ router.post("/login", async (request, response) => {
   response.send({ message: "Successfull Login", token });
 });
 
+// router.post("reset-password", async (request, response) => {
+//   crypto.randomBytes(32, (err, buffer) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     const token = buffer.toString("hex");
+//     usersRouter.findOne({ email: req.body.email }).then((user) => {
+//       if (!user) {
+//         return res.status(422).json({ error: "User dont exist" });
+//       }
+//     });
+//   });
+// });
 export const usersRouter = router;
