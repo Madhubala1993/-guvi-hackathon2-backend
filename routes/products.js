@@ -23,9 +23,9 @@ router.get("/", async (request, response) => {
 });
 
 router.get("/:id", async (request, response) => {
-  const { _id } = request.params;
-  console.log(_id);
-  const product = await getProductsById(_id);
+  const { id } = request.params;
+  console.log(id);
+  const product = await getProductsById(id);
 
   product
     ? response.send(product)
@@ -34,14 +34,16 @@ router.get("/:id", async (request, response) => {
 });
 
 router.delete("/:id", async (request, response) => {
-  const { _id } = request.params;
-  console.log(_id);
-  const product = await deleteProducts(_id);
+  const { id } = request.params;
+  console.log(id);
+  const product = await deleteProducts(id);
   response.send(product);
+  console.log(product);
 });
 
 router.put("/:id", async (request, response) => {
   const { id } = request.params;
+  console.log(id);
   const updateProduct = request.body;
   console.log(updateProduct);
   const product = await updateProductsById(id, updateProduct);

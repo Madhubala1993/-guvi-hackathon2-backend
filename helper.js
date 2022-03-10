@@ -1,4 +1,4 @@
-import { client } from "./server.js";
+import { client } from "./serverfile.js";
 import bcrypt from "bcrypt";
 
 export async function getProductsById(id) {
@@ -11,7 +11,7 @@ export async function deleteProducts(id) {
   return await client
     .db("equipments")
     .collection("equipments")
-    .deleteOne({ id: id });
+    .deleteOne({ description: id });
 }
 export async function getAllProducts(request) {
   return await client
@@ -31,7 +31,7 @@ export async function updateProductsById(id, updateProduct) {
   return await client
     .db("equipments")
     .collection("equipments")
-    .updateOne({ id: id }, { $set: updateProduct });
+    .updateOne({ description: id }, { $set: updateProduct });
 }
 
 export async function genPassword(password) {
@@ -43,7 +43,7 @@ export async function genPassword(password) {
 
 export async function createUser(username, hashedPassword) {
   return await client
-    .db("equipments")
+    .db("password")
     .collection("users")
     .insertOne({ username: username, password: hashedPassword });
 }
