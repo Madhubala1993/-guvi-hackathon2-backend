@@ -11,7 +11,7 @@ export async function deleteProducts(id) {
   return await client
     .db("equipments")
     .collection("equipments")
-    .deleteOne({ description: id });
+    .deleteOne({ _id: id });
 }
 export async function getAllProducts(request) {
   return await client
@@ -31,7 +31,7 @@ export async function updateProductsById(id, updateProduct) {
   return await client
     .db("equipments")
     .collection("equipments")
-    .updateOne({ description: id }, { $set: updateProduct });
+    .updateOne({ _id: id }, { $set: updateProduct });
 }
 
 export async function genPassword(password) {
