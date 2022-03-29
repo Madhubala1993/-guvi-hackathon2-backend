@@ -50,6 +50,8 @@ router.put("/:id", async (request, response) => {
   response.send(product);
 });
 
+
+
 router.post("/add", async (request, response) => {
   const newProducts = request.body;
   console.log(newProducts);
