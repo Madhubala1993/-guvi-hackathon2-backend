@@ -1,17 +1,19 @@
 import { client } from "./serverfile.js";
 import bcrypt from "bcrypt";
+import { ObjectId } from "mongodb";
 
 export async function getProductsById(id) {
   return await client
     .db("equipments")
     .collection("equipments")
-    .findOne({ id: id });
+    .findOne({ _id: ObjectId(id) });
 }
 export async function deleteProducts(id) {
+  // console.log(id);
   return await client
     .db("equipments")
     .collection("equipments")
-    .deleteOne({ id: id });
+    .deleteOne({ _id: ObjectId(id) });
 }
 export async function getAllProducts(request) {
   return await client
@@ -31,7 +33,7 @@ export async function updateProductsById(id, updateProduct) {
   return await client
     .db("equipments")
     .collection("equipments")
-    .updateOne({ id: id }, { $set: updateProduct });
+    .updateOne({ _id: ObjectId(id) }, { $set: updateProduct });
 }
 
 export async function genPassword(password) {
