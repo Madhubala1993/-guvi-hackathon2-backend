@@ -26,7 +26,7 @@ export async function addProducts(newProducts) {
   return await client
     .db("equipments")
     .collection("equipments")
-    .insertMany(newProducts);
+    .insertOne(newProducts);
 }
 
 export async function updateProductsById(id, updateProduct) {
