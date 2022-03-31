@@ -20,13 +20,12 @@ async function createConnection() {
   console.log("Mongo is connected");
   return client;
 }
-
-export const client = await createConnection();
-
 const razorpay = new Razorpay({
   key_id: process.env.key_id,
   key_secret: process.env.key_secret,
 });
+
+export const client = await createConnection();
 
 app.use(express.json());
 app.use(cors());
