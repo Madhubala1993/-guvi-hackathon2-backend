@@ -59,7 +59,7 @@ export async function updateProductsById(id, updateProduct) {
 
 export async function getAllUsers(request) {
   return await client
-    .db("password")
+    .db("equipments")
     .collection("users")
     .find(request.query)
     .toArray();
@@ -84,7 +84,7 @@ export async function createUser(
   hashedPassword,
   hashedConfirmPwd
 ) {
-  return await client.db("password").collection("users").insertOne({
+  return await client.db("equipments").collection("users").insertOne({
     username: username,
     mailid: mailid,
     password: hashedPassword,
@@ -94,7 +94,7 @@ export async function createUser(
 
 export async function getUserByName(username) {
   return await client
-    .db("password")
+    .db("equipments")
     .collection("users")
     .findOne({ username: username });
 }
