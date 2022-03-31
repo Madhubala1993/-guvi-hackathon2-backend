@@ -90,7 +90,7 @@ router.post("/forgotPassword", async (req, response) => {
   console.log(username);
 
   const existingUser = await client
-    .db("password")
+    .db("equipments")
     .collection("users")
     .findOne({ username: username });
 
@@ -111,7 +111,7 @@ router.post("/forgotPassword/:username", async (req, response) => {
   if (+otp === otp_number) {
     const password = await genPassword(new_pwd);
     const passwordUpdate = await client
-      .db("password")
+      .db("equipments")
       .collection("users")
       .updateOne({ username: username }, { $set: { password: password } });
     if (passwordUpdate) {
