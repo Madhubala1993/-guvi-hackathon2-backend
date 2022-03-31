@@ -10,16 +10,9 @@ import { usersRouter } from "./routes/users.js";
 dotenv.config();
 
 const app = express();
-// const PORT = 9000;
 const PORT = process.env.PORT;
 
-// const MONGO_URL = "mongodb://localhost";
 const MONGO_URL = process.env.MONGO_URL;
-
-const razorpay = new Razorpay({
-  key_id: process.env.key_id,
-  key_secret: process.env.key_secret,
-});
 
 async function createConnection() {
   const client = new MongoClient(MONGO_URL);
@@ -29,6 +22,11 @@ async function createConnection() {
 }
 
 export const client = await createConnection();
+
+const razorpay = new Razorpay({
+  key_id: process.env.key_id,
+  key_secret: process.env.key_secret,
+});
 
 app.use(express.json());
 app.use(cors());
