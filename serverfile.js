@@ -44,7 +44,7 @@ app.get("/razorpay", (req, res) => {
 });
 
 app.post("/razorpay", async (req, res) => {
-  const amount = request.body;
+  const amount = req.body;
   console.log(amount);
   const total = await totalAmount(amount);
   response.send(total);
