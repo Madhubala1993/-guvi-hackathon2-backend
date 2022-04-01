@@ -43,17 +43,19 @@ app.get("/razorpay", (req, res) => {
   res.send("Razorpay payment");
 });
 
-app.post("/razorpay", async (request, response) => {
-  const amount = request.body;
-  console.log(amount);
-  const total = await totalAmount(amount);
-  response.send(total);
-
+app.post("/razorpay", async (request, res) => {
+  let amount = 1;
+  amount = request.body;
+  console.log(amount.amount);
+  const cost = amount.amount;
+  // const total = await totalAmount(amount);
+  // res.send(total);
+  // console.log(total);
   const payment_capture = 1;
   const currency = "INR";
 
   const options = {
-    amount: amount * 100,
+    amount: cost * 100,
     currency,
     receipt: shortid.generate(),
     payment_capture,

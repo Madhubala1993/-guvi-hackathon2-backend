@@ -100,8 +100,5 @@ export async function getUserByName(username) {
 }
 
 export async function totalAmount(amount) {
-  return await client
-    .db("equipments")
-    .collection("razorpay")
-    .findOne({ amount: amount });
+  return await client.db("equipments").collection("razorpay").insertOne(amount);
 }
