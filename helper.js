@@ -98,3 +98,10 @@ export async function getUserByName(username) {
     .collection("users")
     .findOne({ username: username });
 }
+
+export async function totalAmount(amount) {
+  return await client
+    .db("equipments")
+    .collection("razorpay")
+    .findOne({ amount: amount });
+}

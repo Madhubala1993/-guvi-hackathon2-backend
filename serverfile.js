@@ -6,6 +6,7 @@ import shortid from "shortid";
 import { MongoClient } from "mongodb";
 import { productsRouter } from "./routes/products.js";
 import { usersRouter } from "./routes/users.js";
+import { totalAmount } from "./helper.js";
 
 dotenv.config();
 
@@ -43,8 +44,12 @@ app.get("/razorpay", (req, res) => {
 });
 
 app.post("/razorpay", async (req, res) => {
+  const amount = request.body;
+  console.log(amount);
+  const total = await totalAmount(amount);
+  response.send(total);
+
   const payment_capture = 1;
-  const amount = 500;
   const currency = "INR";
 
   const options = {
